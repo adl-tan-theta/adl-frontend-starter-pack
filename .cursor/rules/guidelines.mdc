@@ -1,0 +1,151 @@
+---
+alwaysApply: true
+---
+## 🎉 **Next.js 16 + React 19 Starter Kit**
+
+### **✅ Features:**
+- **Environment**: `.env.example`, Database/Redis/NextAuth/OpenTelemetry configs
+- **Health**: `/api/health` endpoint with DB/Redis monitoring
+- **Auth**: NextAuth.js v4 with JWT, bcrypt, protected routes
+- **Database**: Drizzle ORM + PostgreSQL + seeding system
+- **Monitoring**: OpenTelemetry + Jaeger + Docker integration
+
+### **🚀 Next.js 16 Updates:**
+- **Proxy**: Use `proxy.ts` instead of `middleware.ts`
+- **Caching**: `dynamic = 'force-static'` + `revalidate = false`
+- **React 19**: `useActionState`, `useFormStatus`, `use()`, ref as prop
+- **Turbopack**: `bun run next dev --turbo --port 3000`
+
+### **📊 Production Features:**
+| Feature | Status | Implementation |
+|---------|--------|----------------|
+| Health Checks | ✅ | `/api/health` with DB/Redis monitoring |
+| Password Security | ✅ | bcrypt with configurable rounds |
+| Database Seeding | ✅ | Development data with relationships |
+| OpenTelemetry | ✅ | Full instrumentation + Docker |
+| Error Handling | ✅ | Error boundaries + custom pages |
+| Rate Limiting | ✅ | API protection with headers |
+| Docker Setup | ✅ | Multi-service containerization |
+
+### **🛠️ Commands:**
+```bash
+# Development
+bun run dev              # Start with Turbopack
+bun run dev:no-turbo     # Start without Turbopack
+bun run build            # Build for production
+bun run start            # Start production server
+
+# Database
+bun run db:generate      # Generate migrations
+bun run db:migrate       # Run migrations
+bun run db:push          # Push schema changes
+bun run db:studio        # Open Drizzle Studio
+bun run db:seed          # Seed development data
+
+# Docker
+bun run docker:up        # Start all services
+bun run docker:down      # Stop all services
+bun run docker:build     # Build and start
+bun run docker:logs      # View logs
+
+# Code Quality
+bun run lint             # Check code with Biome
+bun run lint:fix         # Fix linting issues
+bun run format           # Format code
+bun run check            # Run all checks (lint + format)
+```
+
+### **🔐 Auth Demo:**
+- **Sign In**: `/auth/signin`
+- **Register**: `/api/auth/register` (POST)
+- **Dashboard**: `/dashboard` (protected)
+- **Health Check**: `/api/health`
+
+### **📈 Monitoring:**
+- **Jaeger UI**: `http://localhost:16686`
+- **OpenTelemetry**: Ports 4317 (gRPC), 4318 (HTTP)
+- **Health Endpoint**: `/api/health`
+- **Database Studio**: `bun run db:studio`
+
+### **📚 Development Guidelines:**
+
+#### **Next.js 16 Caching:**
+- Use `dynamic = 'force-static'` + `revalidate = false` for static pages
+- Use `dynamic = 'force-dynamic'` + `revalidate = 0` for dynamic pages
+- Use `dynamic = 'auto'` + `revalidate = 60` for hybrid pages
+- Watch route indicators: ○ (static), λ (dynamic), ◐ (partial)
+
+#### **React 19 Features:**
+- No `forwardRef` needed - pass `ref` as regular prop
+- Use `useActionState` for form handling with server actions
+- Use `useFormStatus` for form submission states
+- Use `use()` hook with Suspense for Promise handling
+- Add `data-slot` attributes for component styling
+
+#### **Tailwind CSS v4:**
+- Use OKLCH colors: `oklch(0.5 0.2 250)` format
+- Use `size-*` classes instead of `w-* h-*`
+- Configure with `@theme inline` and `@layer base`
+- Use CSS variables for theme switching
+
+#### **Shadcn/ui Components:**
+- Install with `npx shadcn@latest init`
+- Use `data-slot` attributes for styling
+- Components work with React 19 ref handling
+- Full TypeScript support with variants
+
+#### **Backend Integration:**
+- Use Zod for validation schemas
+- Use Drizzle ORM for type-safe database operations
+- Use Server Actions for form handling
+- Use API routes for REST endpoints
+- Always validate inputs with Zod
+
+#### **Error Handling:**
+- Use error boundaries for client errors
+- Use custom error pages (404, 500, global)
+- Use API error handling with proper status codes
+- Use rate limiting for API protection
+- Use OpenTelemetry for monitoring
+
+#### **Dark Mode:**
+- Use `next-themes` with `attribute="class"`
+- Use `suppressHydrationWarning` in layout
+- Use `useTheme()` hook for theme switching
+- Use CSS variables for theme colors
+
+#### **Bun Integration:**
+- Use `bun run` for all scripts
+- Use `bunx` for CLI tools
+- Use `bun install` for dependencies
+- Faster than npm/pnpm
+- Use `bun run build` for production builds
+- Use `bun run start` for production server
+
+#### **Framer Motion:**
+- Use `AnimatePresence` for enter/exit animations
+- Use `whileHover`, `whileTap` for gestures
+- Use staggered animations with delays
+- Use spring physics for natural motion
+
+#### **Biome Integration:**
+- Use `bunx biome check` for linting
+- Use `bunx biome format` for code formatting
+- Configure with `biome.json` for project settings
+- Supports TypeScript, JavaScript, and CSS
+- Faster than ESLint + Prettier combination
+
+### **🎯 Production Setup:**
+1. Copy `.env.example` to `.env.local` and configure
+2. Run `bun run db:migrate` to set up tables
+3. Run `bun run db:seed` for development data
+4. Run `bun run docker:up` for infrastructure
+5. Run `bun run dev` to start the application
+
+### **🔧 Development Workflow:**
+1. **Code Quality**: Run `bun run check` before commits
+2. **Database Changes**: Use `bun run db:generate` then `bun run db:migrate`
+3. **Testing**: Use `/api/test-error` endpoints for error handling
+4. **Monitoring**: Check Jaeger UI at `http://localhost:16686`
+5. **Health Checks**: Monitor `/api/health` endpoint
+6. **Build Verification**: Run `bun run build` before deployment
