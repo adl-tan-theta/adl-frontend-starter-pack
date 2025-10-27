@@ -1,11 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server';
-import createIntlMiddleware from 'next-intl/middleware';
-
-// Create the intl middleware
-const intlMiddleware = createIntlMiddleware({
-  locales: ['en', 'fr', 'es', 'de'],
-  defaultLocale: 'en'
-});
 
 // Simple in-memory rate limiting (in production, use Redis or similar)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -48,9 +41,6 @@ function isRateLimited(key: string): boolean {
 
 export function middleware(request: NextRequest) {
   try {
-    // Handle internationalization first
-    const intlResponse = intlMiddleware(request);
-    
     // Only apply rate limiting to API routes
     if (request.nextUrl.pathname.startsWith('/api/')) {
       const key = getRateLimitKey(request);
@@ -89,7 +79,7 @@ export function middleware(request: NextRequest) {
       }
     }
 
-    return intlResponse;
+    return NextResponse.next();
   } catch (error) {
     console.error('Middleware error:', error);
     
@@ -107,8 +97,6 @@ export function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    // Match only internationalized pathnames
-    '/(fr|es|de|en)/:path*',
     // Match API routes
     '/api/:path*',
   ],
