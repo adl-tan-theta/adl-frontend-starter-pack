@@ -1,19 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  // Enable Turbopack for faster development builds
+  // Enable optimized package imports
   experimental: {
-    turbo: {
-      // Turbopack configuration options
-      rules: {
-        // Add any specific rules for Turbopack if needed
-      },
-    },
-    // Enable server components logging for debugging
-    serverComponentsExternalPackages: [],
-    // Enable optimized package imports
     optimizePackageImports: ['react', 'react-dom'],
   },
+  
+  // Server external packages (moved from experimental)
+  serverExternalPackages: [],
   
   // Next.js 15 caching configuration
   // Explicitly set caching strategies
