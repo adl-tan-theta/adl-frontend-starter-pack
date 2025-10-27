@@ -1,6 +1,10 @@
 import Image from "next/image";
 import React19Demo from "@/components/React19Demo";
 import ShadcnUIDemo from "@/components/ShadcnUIDemo";
+import BackendDemo from "@/components/BackendDemo";
+import AnimationsDemo from "@/components/AnimationsDemo";
+import NextJSFeaturesDemo from "@/components/NextJSFeaturesDemo";
+import { ThemeToggle, ThemeToggleWithDropdown } from "@/components/ThemeToggle";
 
 // Next.js 15: Explicit caching configuration
 // Force static generation for the home page
@@ -12,6 +16,10 @@ export default function Home() {
     <div className="min-h-screen bg-zinc-50 font-sans dark:bg-black">
       <main className="container mx-auto py-8">
         <div className="text-center mb-8">
+          <div className="flex justify-between items-start mb-4">
+            <div></div>
+            <ThemeToggle />
+          </div>
           <Image
             className="dark:invert mx-auto mb-4"
             src="/next.svg"
@@ -26,12 +34,27 @@ export default function Home() {
           <p className="text-lg text-zinc-600 dark:text-zinc-400">
             Turbopack enabled with new caching models and React 19 features
           </p>
+          <div className="mt-4">
+            <ThemeToggleWithDropdown />
+          </div>
         </div>
         
         <React19Demo />
         
         <div className="mt-12">
           <ShadcnUIDemo />
+        </div>
+        
+        <div className="mt-12">
+          <BackendDemo />
+        </div>
+        
+        <div className="mt-12">
+          <AnimationsDemo />
+        </div>
+        
+        <div className="mt-12">
+          <NextJSFeaturesDemo />
         </div>
       </main>
     </div>

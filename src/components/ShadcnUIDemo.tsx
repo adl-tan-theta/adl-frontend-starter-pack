@@ -3,15 +3,21 @@
 import React from "react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ThemeToggle } from "./ThemeToggle";
 
 export default function ShadcnUIDemo() {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
       <div>
-        <h2 className="text-3xl font-bold mb-2">Shadcn/ui Components Demo</h2>
-        <p className="text-muted-foreground">
-          Showcasing Shadcn/ui components with Tailwind CSS v4 and React 19
-        </p>
+        <div className="flex justify-between items-center mb-4">
+          <div>
+            <h2 className="text-3xl font-bold mb-2">Shadcn/ui Components Demo</h2>
+            <p className="text-muted-foreground">
+              Showcasing Shadcn/ui components with Tailwind CSS v4 and React 19
+            </p>
+          </div>
+          <ThemeToggle />
+        </div>
       </div>
 
       {/* Button Variants */}
