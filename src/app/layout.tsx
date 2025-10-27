@@ -2,6 +2,11 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+// Next.js 15: Explicit caching configuration
+// Force static generation for the root layout
+export const dynamic = 'force-static';
+export const revalidate = false; // Never revalidate - fully static
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
