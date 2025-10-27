@@ -1,0 +1,70 @@
+{
+  "common": {
+    "welcome": "Welcome",
+    "hello": "Hello",
+    "goodbye": "Goodbye",
+    "yes": "Yes",
+    "no": "No",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "signin": "Sign In",
+    "signout": "Sign Out"
+  },
+  "auth": {
+    "signin": "Sign In",
+    "signout": "Sign Out",
+    "email": "Email",
+    "password": "Password",
+    "signinButton": "Sign In",
+    "signingIn": "Signing in...",
+    "invalidCredentials": "Invalid credentials",
+    "welcomeBack": "Welcome back, {name}!",
+    "demoCredentials": "Demo credentials:",
+    "demoEmail": "Email: demo@example.com",
+    "demoPassword": "Password: any password"
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome back, {name}!",
+    "userProfile": "User Profile",
+    "accountInfo": "Your account information",
+    "sessionInfo": "Session Info",
+    "authDetails": "Authentication details",
+    "security": "Security",
+    "accountSecurity": "Account security settings",
+    "changePassword": "Change Password",
+    "twoFactorAuth": "Two-Factor Auth",
+    "securityLogs": "Security Logs",
+    "name": "Name",
+    "email": "Email",
+    "userId": "User ID",
+    "sessionUuid": "Session UUID",
+    "strategy": "Strategy",
+    "status": "Status",
+    "authenticated": "Authenticated"
+  },
+  "features": {
+    "title": "NextAuth.js Features",
+    "description": "Authentication system capabilities",
+    "jwtAuth": "JWT Authentication",
+    "jwtDesc": "Secure token-based authentication with configurable expiration",
+    "sessionMgmt": "Session Management",
+    "sessionDesc": "Automatic session refresh and secure session handling",
+    "routeProtection": "Route Protection",
+    "routeDesc": "Protected routes with automatic redirects for unauthenticated users",
+    "uuid6Integration": "UUID6 Integration",
+    "uuidDesc": "Unique session identifiers for enhanced security"
+  }
+}

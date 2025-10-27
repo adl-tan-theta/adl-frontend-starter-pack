@@ -4,6 +4,7 @@ import ShadcnUIDemo from "@/components/ShadcnUIDemo";
 import BackendDemo from "@/components/BackendDemo";
 import AnimationsDemo from "@/components/AnimationsDemo";
 import NextJSFeaturesDemo from "@/components/NextJSFeaturesDemo";
+import ErrorHandlingDemo from "@/components/ErrorHandlingDemo";
 import { ThemeToggle, ThemeToggleWithDropdown } from "@/components/ThemeToggle";
 
 // Next.js 15: Explicit caching configuration
@@ -53,10 +54,14 @@ export default function Home() {
           <AnimationsDemo />
         </div>
         
-        <div className="mt-12">
-          <NextJSFeaturesDemo />
+            <div className="mt-12">
+              <NextJSFeaturesDemo />
+            </div>
+
+            <div className="mt-12">
+              <ErrorHandlingDemo />
+            </div>
+          </main>
         </div>
-      </main>
-    </div>
-  );
-}
+      );
+    }

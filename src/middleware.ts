@@ -1,4 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
+import createIntlMiddleware from 'next-intl/middleware';
+
+// Create the intl middleware
+const intlMiddleware = createIntlMiddleware({
+  locales: ['en', 'fr', 'es', 'de'],
+  defaultLocale: 'en'
+});
 
 // Simple in-memory rate limiting (in production, use Redis or similar)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -40,49 +47,69 @@ function isRateLimited(key: string): boolean {
 }
 
 export function middleware(request: NextRequest) {
-  // Only apply rate limiting to API routes
-  if (request.nextUrl.pathname.startsWith('/api/')) {
-    const key = getRateLimitKey(request);
+  try {
+    // Handle internationalization first
+    const intlResponse = intlMiddleware(request);
     
-    if (isRateLimited(key)) {
-      return NextResponse.json(
-        { 
-          success: false, 
-          message: 'Too many requests. Please try again later.',
-          error: 'RATE_LIMIT_EXCEEDED'
-        },
-        { 
-          status: 429,
-          headers: {
-            'Retry-After': '60',
-            'X-RateLimit-Limit': RATE_LIMIT_MAX_REQUESTS.toString(),
-            'X-RateLimit-Remaining': '0',
-            'X-RateLimit-Reset': new Date(Date.now() + RATE_LIMIT_WINDOW).toISOString(),
+    // Only apply rate limiting to API routes
+    if (request.nextUrl.pathname.startsWith('/api/')) {
+      const key = getRateLimitKey(request);
+      
+      if (isRateLimited(key)) {
+        return NextResponse.json(
+          { 
+            success: false, 
+            message: 'Too many requests. Please try again later.',
+            error: 'RATE_LIMIT_EXCEEDED'
+          },
+          { 
+            status: 429,
+            headers: {
+              'Retry-After': '60',
+              'X-RateLimit-Limit': RATE_LIMIT_MAX_REQUESTS.toString(),
+              'X-RateLimit-Remaining': '0',
+              'X-RateLimit-Reset': new Date(Date.now() + RATE_LIMIT_WINDOW).toISOString(),
+            }
           }
-        }
-      );
+        );
+      }
+
+      // Add rate limit headers to successful responses
+      const record = rateLimitMap.get(key);
+      if (record) {
+        const remaining = Math.max(0, RATE_LIMIT_MAX_REQUESTS - record.count);
+        const resetTime = new Date(record.resetTime).toISOString();
+        
+        const response = NextResponse.next();
+        response.headers.set('X-RateLimit-Limit', RATE_LIMIT_MAX_REQUESTS.toString());
+        response.headers.set('X-RateLimit-Remaining', remaining.toString());
+        response.headers.set('X-RateLimit-Reset', resetTime);
+        
+        return response;
+      }
     }
 
-    // Add rate limit headers to successful responses
-    const record = rateLimitMap.get(key);
-    if (record) {
-      const remaining = Math.max(0, RATE_LIMIT_MAX_REQUESTS - record.count);
-      const resetTime = new Date(record.resetTime).toISOString();
-      
-      const response = NextResponse.next();
-      response.headers.set('X-RateLimit-Limit', RATE_LIMIT_MAX_REQUESTS.toString());
-      response.headers.set('X-RateLimit-Remaining', remaining.toString());
-      response.headers.set('X-RateLimit-Reset', resetTime);
-      
-      return response;
-    }
+    return intlResponse;
+  } catch (error) {
+    console.error('Middleware error:', error);
+    
+    // Return a safe response to prevent middleware crashes
+    return NextResponse.json(
+      { 
+        success: false, 
+        message: 'Middleware error occurred',
+        error: 'MIDDLEWARE_ERROR'
+      },
+      { status: 500 }
+    );
   }
-
-  return NextResponse.next();
 }
 
 export const config = {
   matcher: [
+    // Match only internationalized pathnames
+    '/(fr|es|de|en)/:path*',
+    // Match API routes
     '/api/:path*',
   ],
 };
