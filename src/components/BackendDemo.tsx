@@ -1,14 +1,20 @@
 "use client";
 
-import React, { useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  createUser, 
-  getUsers, 
-  createPost, 
-  getPosts, 
-  subscribeToNewsletter 
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  createPost,
+  createUser,
+  getPosts,
+  getUsers,
+  subscribeToNewsletter,
 } from "@/lib/server/actions";
 
 interface ApiResponse {
@@ -26,9 +32,9 @@ export default function BackendDemo() {
   const handleCreateUser = () => {
     startTransition(async () => {
       const formData = new FormData();
-      formData.append('email', 'user@example.com');
-      formData.append('name', 'John Doe');
-      
+      formData.append("email", "user@example.com");
+      formData.append("name", "John Doe");
+
       const result = await createUser(formData);
       setResponse(result);
       if (result.success) {
@@ -44,18 +50,18 @@ export default function BackendDemo() {
         setUsers(result.data || []);
       }
     } catch (error) {
-      console.error('Error fetching users:', error);
+      console.error("Error fetching users:", error);
     }
   };
 
   const handleCreatePost = () => {
     startTransition(async () => {
       const formData = new FormData();
-      formData.append('title', 'Sample Post');
-      formData.append('content', 'This is a sample post content.');
-      formData.append('published', 'true');
-      formData.append('authorId', '1');
-      
+      formData.append("title", "Sample Post");
+      formData.append("content", "This is a sample post content.");
+      formData.append("published", "true");
+      formData.append("authorId", "1");
+
       const result = await createPost(formData);
       setResponse(result);
       if (result.success) {
@@ -71,15 +77,15 @@ export default function BackendDemo() {
         setPosts(result.data || []);
       }
     } catch (error) {
-      console.error('Error fetching posts:', error);
+      console.error("Error fetching posts:", error);
     }
   };
 
   const handleNewsletterSubscription = () => {
     startTransition(async () => {
       const formData = new FormData();
-      formData.append('email', 'subscriber@example.com');
-      
+      formData.append("email", "subscriber@example.com");
+
       const result = await subscribeToNewsletter(formData);
       setResponse(result);
     });
@@ -96,7 +102,9 @@ export default function BackendDemo() {
 
       {/* Server Actions Demo */}
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold">Server Actions with Zod Validation</h3>
+        <h3 className="text-xl font-semibold">
+          Server Actions with Zod Validation
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <Card>
             <CardHeader>
@@ -107,18 +115,14 @@ export default function BackendDemo() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex gap-2">
-                <Button 
+                <Button
                   onClick={handleCreateUser}
                   disabled={isPending}
                   size="sm"
                 >
                   {isPending ? "Creating..." : "Create User"}
                 </Button>
-                <Button 
-                  onClick={fetchUsers}
-                  variant="outline"
-                  size="sm"
-                >
+                <Button onClick={fetchUsers} variant="outline" size="sm">
                   Fetch Users
                 </Button>
               </div>
@@ -127,7 +131,9 @@ export default function BackendDemo() {
                   <p className="font-medium">Users ({users.length}):</p>
                   <ul className="list-disc list-inside">
                     {users.map((user) => (
-                      <li key={user.id}>{user.name} - {user.email}</li>
+                      <li key={user.id}>
+                        {user.name} - {user.email}
+                      </li>
                     ))}
                   </ul>
                 </div>
@@ -144,18 +150,14 @@ export default function BackendDemo() {
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="flex gap-2">
-                <Button 
+                <Button
                   onClick={handleCreatePost}
                   disabled={isPending}
                   size="sm"
                 >
                   {isPending ? "Creating..." : "Create Post"}
                 </Button>
-                <Button 
-                  onClick={fetchPosts}
-                  variant="outline"
-                  size="sm"
-                >
+                <Button onClick={fetchPosts} variant="outline" size="sm">
                   Fetch Posts
                 </Button>
               </div>
@@ -185,10 +187,7 @@ export default function BackendDemo() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button 
-              onClick={handleNewsletterSubscription}
-              disabled={isPending}
-            >
+            <Button onClick={handleNewsletterSubscription} disabled={isPending}>
               {isPending ? "Subscribing..." : "Subscribe to Newsletter"}
             </Button>
           </CardContent>
@@ -200,18 +199,18 @@ export default function BackendDemo() {
         <Card>
           <CardHeader>
             <CardTitle>API Response</CardTitle>
-            <CardDescription>
-              Latest server action response
-            </CardDescription>
+            <CardDescription>Latest server action response</CardDescription>
           </CardHeader>
           <CardContent>
-            <div className={`p-4 rounded-md ${
-              response.success 
-                ? 'bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200' 
-                : 'bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200'
-            }`}>
+            <div
+              className={`p-4 rounded-md ${
+                response.success
+                  ? "bg-green-50 dark:bg-green-900/20 text-green-800 dark:text-green-200"
+                  : "bg-red-50 dark:bg-red-900/20 text-red-800 dark:text-red-200"
+              }`}
+            >
               <p className="font-medium">
-                {response.success ? '✅ Success' : '❌ Error'}
+                {response.success ? "✅ Success" : "❌ Error"}
               </p>
               <p className="text-sm mt-1">{response.message}</p>
               {response.data && (

@@ -1,10 +1,8 @@
-version: '3.8'
-
 services:
   # PostgreSQL Database
   postgres:
     image: postgres:15-alpine
-    container_name: openkb_postgres
+    container_name: frontend_postgres
     environment:
       POSTGRES_DB: openkb
       POSTGRES_USER: postgres
@@ -24,7 +22,7 @@ services:
   # Redis Cache
   redis:
     image: redis:8-alpine
-    container_name: openkb_redis
+    container_name: frontend_redis
     ports:
       - "6379:6379"
     volumes:
@@ -41,26 +39,28 @@ services:
   # OpenTelemetry Collector (Lightweight)
   otel-collector:
     image: otel/opentelemetry-collector-contrib:latest
-    container_name: openkb_otel
+    container_name: frontend_otel
     command: ["--config=/etc/otel-collector-config.yaml"]
     volumes:
       - ./otel-collector-config.yaml:/etc/otel-collector-config.yaml
     ports:
-      - "4317:4317"   # OTLP gRPC receiver
-      - "4318:4318"   # OTLP HTTP receiver
-      - "8888:8888"   # Prometheus metrics
+      - "4319:4317"   # OTLP gRPC receiver (moved to avoid conflict)
+      - "4320:4318"   # OTLP HTTP receiver (moved to avoid conflict)
+      - "8889:8889"   # Prometheus metrics
     networks:
       - app-network
     depends_on:
       - redis
+      - jaeger
 
   # Jaeger (for tracing visualization)
   jaeger:
     image: jaegertracing/all-in-one:latest
-    container_name: openkb_jaeger
+    container_name: frontend_jaeger
     ports:
       - "16686:16686"  # Jaeger UI
-      - "14250:14250"  # Jaeger gRPC
+      - "4317:4317"    # OTLP gRPC receiver
+      - "4318:4318"    # OTLP HTTP receiver
     environment:
       - COLLECTOR_OTLP_ENABLED=true
     networks:

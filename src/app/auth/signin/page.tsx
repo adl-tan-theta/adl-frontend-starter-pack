@@ -1,13 +1,19 @@
 "use client";
 
-import { useState } from "react";
-import { signIn, getSession } from "next-auth/react";
+import { AlertCircle, Lock, Mail } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { getSession, signIn } from "next-auth/react";
+import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { AlertCircle, Mail, Lock } from "lucide-react";
 
 export default function SignIn() {
   const [email, setEmail] = useState("");
@@ -35,7 +41,7 @@ export default function SignIn() {
         await getSession();
         router.push("/dashboard");
       }
-    } catch (error) {
+    } catch (_error) {
       setError("An error occurred during sign in");
     } finally {
       setLoading(false);
@@ -59,7 +65,7 @@ export default function SignIn() {
                 <span className="text-sm">{error}</span>
               </div>
             )}
-            
+
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <div className="relative">
@@ -75,7 +81,7 @@ export default function SignIn() {
                 />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="password">Password</Label>
               <div className="relative">
@@ -91,12 +97,12 @@ export default function SignIn() {
                 />
               </div>
             </div>
-            
+
             <Button type="submit" className="w-full" disabled={loading}>
               {loading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
-          
+
           <div className="mt-6 text-center text-sm text-muted-foreground">
             <p>Demo credentials:</p>
             <p className="font-mono">Email: demo@example.com</p>

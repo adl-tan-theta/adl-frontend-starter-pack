@@ -1,25 +1,34 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { AlertTriangle, RefreshCw, Home } from 'lucide-react';
+import { AlertTriangle, Home, RefreshCw } from "lucide-react";
+import { useEffect } from "react";
+import { Button } from "@/components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 interface ErrorProps {
   error: Error & { digest?: string };
   reset: () => void;
 }
 
-export default function Error({ error, reset }: ErrorProps) {
+export default function ErrorComponent({
+  error: errorInfo,
+  reset,
+}: ErrorProps) {
   useEffect(() => {
     // Log the error to console in development
-    console.error('Client Error:', error);
-    
+    console.error("Client Error:", errorInfo);
+
     // In production, this would be sent to OpenTelemetry
-    if (process.env.NODE_ENV === 'production') {
+    if (process.env.NODE_ENV === "production") {
       // OpenTelemetry error tracking would go here
     }
-  }, [error]);
+  }, [errorInfo]);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
@@ -30,29 +39,36 @@ export default function Error({ error, reset }: ErrorProps) {
           </div>
           <CardTitle className="text-xl">Something went wrong</CardTitle>
           <CardDescription>
-            An unexpected error occurred. Don't worry, we've been notified and are working on it.
+            An unexpected error occurred. Don't worry, we've been notified and
+            are working on it.
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          {process.env.NODE_ENV === 'development' && (
+          {process.env.NODE_ENV === "development" && (
             <div className="rounded-lg bg-red-50 dark:bg-red-900/20 p-3">
               <p className="text-sm text-red-800 dark:text-red-200 font-mono">
-                {error.message}
+                {errorInfo.message}
               </p>
-              {error.digest && (
+              {errorInfo.digest && (
                 <p className="text-xs text-red-600 dark:text-red-400 mt-1">
-                  Error ID: {error.digest}
+                  Error ID: {errorInfo.digest}
                 </p>
               )}
             </div>
           )}
-          
+
           <div className="flex flex-col gap-2">
             <Button onClick={reset} className="w-full">
               <RefreshCw className="h-4 w-4 mr-2" />
               Try again
             </Button>
-            <Button variant="outline" onClick={() => window.location.href = '/'} className="w-full">
+            <Button
+              variant="outline"
+              onClick={() => {
+                window.location.href = "/";
+              }}
+              className="w-full"
+            >
               <Home className="h-4 w-4 mr-2" />
               Go home
             </Button>

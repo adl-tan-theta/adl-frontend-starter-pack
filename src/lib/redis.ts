@@ -1,15 +1,15 @@
-import { createClient } from 'redis';
+import { createClient } from "redis";
 
 const redisClient = createClient({
-  url: process.env.REDIS_URL || 'redis://localhost:6379',
+  url: process.env.REDIS_URL || "redis://localhost:6379",
 });
 
-redisClient.on('error', (err) => {
-  console.error('Redis Client Error:', err);
+redisClient.on("error", (err) => {
+  console.error("Redis Client Error:", err);
 });
 
-redisClient.on('connect', () => {
-  console.log('Redis Client Connected');
+redisClient.on("connect", () => {
+  console.log("Redis Client Connected");
 });
 
 // Connect to Redis
@@ -27,7 +27,7 @@ export class CacheService {
     try {
       return await this.client.get(key);
     } catch (error) {
-      console.error('Cache get error:', error);
+      console.error("Cache get error:", error);
       return null;
     }
   }
@@ -41,7 +41,7 @@ export class CacheService {
       }
       return true;
     } catch (error) {
-      console.error('Cache set error:', error);
+      console.error("Cache set error:", error);
       return false;
     }
   }
@@ -51,7 +51,7 @@ export class CacheService {
       await this.client.del(key);
       return true;
     } catch (error) {
-      console.error('Cache delete error:', error);
+      console.error("Cache delete error:", error);
       return false;
     }
   }
@@ -61,7 +61,7 @@ export class CacheService {
       const result = await this.client.exists(key);
       return result === 1;
     } catch (error) {
-      console.error('Cache exists error:', error);
+      console.error("Cache exists error:", error);
       return false;
     }
   }
@@ -71,7 +71,7 @@ export class CacheService {
       await this.client.flushAll();
       return true;
     } catch (error) {
-      console.error('Cache flush error:', error);
+      console.error("Cache flush error:", error);
       return false;
     }
   }

@@ -12,27 +12,26 @@ processors:
     send_batch_size: 1024
 
 exporters:
-  # Export to Jaeger
-  jaeger:
-    endpoint: jaeger:14250
+  # Export to Jaeger using OTLP
+  otlp/jaeger:
+    endpoint: jaeger:4317
     tls:
       insecure: true
 
-  # Export to Redis for caching
-  redis:
-    endpoint: redis:6379
-    db: 1
+  # Export logs to console (for debugging)
+  debug/logs:
+    verbosity: detailed
 
   # Export metrics to Prometheus format
   prometheus:
-    endpoint: "0.0.0.0:8888"
+    endpoint: "0.0.0.0:8889"
 
 service:
   pipelines:
     traces:
       receivers: [otlp]
       processors: [batch]
-      exporters: [jaeger]
+      exporters: [otlp/jaeger]
     
     metrics:
       receivers: [otlp]
@@ -42,4 +41,4 @@ service:
     logs:
       receivers: [otlp]
       processors: [batch]
-      exporters: [redis]
+      exporters: [debug/logs]

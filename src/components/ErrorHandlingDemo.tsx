@@ -1,39 +1,53 @@
 "use client";
 
-import React, { useState } from "react";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  AlertTriangle, 
-  Bug, 
-  Server, 
-  Network, 
-  Shield,
+import {
+  AlertTriangle,
+  Bug,
   CheckCircle,
-  XCircle
+  Network,
+  Server,
+  Shield,
+  XCircle,
 } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function ErrorHandlingDemo() {
   const [loading, setLoading] = useState(false);
-  const [results, setResults] = useState<{ type: string; success: boolean; message: string }[]>([]);
+  const [results, setResults] = useState<
+    { type: string; success: boolean; message: string }[]
+  >([]);
 
   const testApiError = async (errorType: string) => {
     setLoading(true);
     try {
       const response = await fetch(`/api/test-error?type=${errorType}`);
       const data = await response.json();
-      
-      setResults(prev => [...prev, {
-        type: errorType,
-        success: data.success,
-        message: data.message
-      }]);
-    } catch (error) {
-      setResults(prev => [...prev, {
-        type: errorType,
-        success: false,
-        message: 'Network error occurred'
-      }]);
+
+      setResults((prev) => [
+        ...prev,
+        {
+          type: errorType,
+          success: data.success,
+          message: data.message,
+        },
+      ]);
+    } catch (_error) {
+      setResults((prev) => [
+        ...prev,
+        {
+          type: errorType,
+          success: false,
+          message: "Network error occurred",
+        },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -41,7 +55,7 @@ export default function ErrorHandlingDemo() {
 
   const testClientError = () => {
     // This will trigger the error boundary
-    throw new Error('This is a test client error');
+    throw new Error("This is a test client error");
   };
 
   const clearResults = () => {
@@ -51,9 +65,12 @@ export default function ErrorHandlingDemo() {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
       <div>
-        <h2 className="text-3xl font-bold mb-2">Error Handling & Monitoring Demo</h2>
+        <h2 className="text-3xl font-bold mb-2">
+          Error Handling & Monitoring Demo
+        </h2>
         <p className="text-muted-foreground">
-          Comprehensive error handling with Sentry integration and user-friendly error pages
+          Comprehensive error handling with Sentry integration and user-friendly
+          error pages
         </p>
       </div>
 
@@ -68,7 +85,7 @@ export default function ErrorHandlingDemo() {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <Button 
+            <Button
               onClick={testClientError}
               variant="destructive"
               className="w-full"
@@ -95,8 +112,8 @@ export default function ErrorHandlingDemo() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button 
-                onClick={() => testApiError('validation')}
+              <Button
+                onClick={() => testApiError("validation")}
                 disabled={loading}
                 variant="outline"
                 className="w-full"
@@ -104,8 +121,8 @@ export default function ErrorHandlingDemo() {
                 <AlertTriangle className="h-4 w-4 mr-2" />
                 Validation Error
               </Button>
-              <Button 
-                onClick={() => testApiError('not-found')}
+              <Button
+                onClick={() => testApiError("not-found")}
                 disabled={loading}
                 variant="outline"
                 className="w-full"
@@ -113,8 +130,8 @@ export default function ErrorHandlingDemo() {
                 <XCircle className="h-4 w-4 mr-2" />
                 Not Found Error
               </Button>
-              <Button 
-                onClick={() => testApiError('server')}
+              <Button
+                onClick={() => testApiError("server")}
                 disabled={loading}
                 variant="outline"
                 className="w-full"
@@ -133,8 +150,8 @@ export default function ErrorHandlingDemo() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button 
-                onClick={() => testApiError('rate-limit')}
+              <Button
+                onClick={() => testApiError("rate-limit")}
                 disabled={loading}
                 variant="outline"
                 className="w-full"
@@ -161,7 +178,7 @@ export default function ErrorHandlingDemo() {
           </div>
           <div className="space-y-2">
             {results.map((result, index) => (
-              <Card key={index}>
+              <Card key={`result-${index}-${result.type}`}>
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3">
                     {result.success ? (
@@ -170,8 +187,12 @@ export default function ErrorHandlingDemo() {
                       <XCircle className="h-5 w-5 text-red-500" />
                     )}
                     <div>
-                      <p className="font-medium capitalize">{result.type} Error</p>
-                      <p className="text-sm text-muted-foreground">{result.message}</p>
+                      <p className="font-medium capitalize">
+                        {result.type} Error
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        {result.message}
+                      </p>
                     </div>
                   </div>
                 </CardContent>
@@ -188,13 +209,13 @@ export default function ErrorHandlingDemo() {
           <Card>
             <CardHeader>
               <CardTitle>404 Page</CardTitle>
-              <CardDescription>
-                Custom not found page
-              </CardDescription>
+              <CardDescription>Custom not found page</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button 
-                onClick={() => window.location.href = '/non-existent-page'}
+              <Button
+                onClick={() => {
+                  window.location.href = "/non-existent-page";
+                }}
                 variant="outline"
                 className="w-full"
               >
@@ -207,15 +228,13 @@ export default function ErrorHandlingDemo() {
           <Card>
             <CardHeader>
               <CardTitle>Global Error</CardTitle>
-              <CardDescription>
-                Critical error handling
-              </CardDescription>
+              <CardDescription>Critical error handling</CardDescription>
             </CardHeader>
             <CardContent>
-              <Button 
+              <Button
                 onClick={() => {
                   // This would trigger global error in a real scenario
-                  console.log('Global error simulation');
+                  console.log("Global error simulation");
                 }}
                 variant="outline"
                 className="w-full"

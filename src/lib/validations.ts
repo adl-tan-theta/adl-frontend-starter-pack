@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 // User validation schemas
 export const createUserSchema = z.object({
@@ -19,7 +19,11 @@ export const createPostSchema = z.object({
 });
 
 export const updatePostSchema = z.object({
-  title: z.string().min(1, { message: "Title is required." }).max(255).optional(),
+  title: z
+    .string()
+    .min(1, { message: "Title is required." })
+    .max(255)
+    .optional(),
   content: z.string().optional(),
   published: z.boolean().optional(),
 });
@@ -68,7 +72,9 @@ export type CreatePostInput = z.infer<typeof createPostSchema>;
 export type UpdatePostInput = z.infer<typeof updatePostSchema>;
 export type CreateCommentInput = z.infer<typeof createCommentSchema>;
 export type UpdateCommentInput = z.infer<typeof updateCommentSchema>;
-export type NewsletterSubscriptionInput = z.infer<typeof newsletterSubscriptionSchema>;
+export type NewsletterSubscriptionInput = z.infer<
+  typeof newsletterSubscriptionSchema
+>;
 export type ApiResponse = z.infer<typeof apiResponseSchema>;
 export type ErrorResponse = z.infer<typeof errorResponseSchema>;
 export type SuccessResponse = z.infer<typeof successResponseSchema>;

@@ -1,24 +1,27 @@
-import { NextRequest, NextResponse } from 'next/server';
-import { db } from '@/lib/db';
-import { users } from '@/lib/db/schema';
-import { createUserSchema } from '@/lib/validations';
-import { apiHandler, createSuccessResponse, createErrorResponse, ValidationError, NotFoundError } from '@/lib/apiHandler';
-import { eq } from 'drizzle-orm';
+import type { NextRequest } from "next/server";
+import {
+  apiHandler,
+  createSuccessResponse,
+  ValidationError,
+} from "@/lib/apiHandler";
+import { db } from "@/lib/db";
+import { users } from "@/lib/db/schema";
+import { createUserSchema } from "@/lib/validations";
 
-export const GET = apiHandler(async (req: NextRequest) => {
+export const GET = apiHandler(async (_req: NextRequest) => {
   try {
     const allUsers = await db.select().from(users);
-    return createSuccessResponse(allUsers, 'Users retrieved successfully');
+    return createSuccessResponse(allUsers, "Users retrieved successfully");
   } catch (error) {
-    console.error('Error fetching users:', error);
-    throw new Error('Failed to fetch users');
+    console.error("Error fetching users:", error);
+    throw new Error("Failed to fetch users");
   }
 });
 
 export const POST = apiHandler(async (req: NextRequest) => {
   try {
     const body = await req.json();
-    
+
     const validation = createUserSchema.safeParse(body);
 
     if (!validation.success) {
@@ -28,15 +31,15 @@ export const POST = apiHandler(async (req: NextRequest) => {
     const newUser = await db.insert(users).values(validation.data).returning();
 
     if (!newUser[0]) {
-      throw new Error('Failed to create user');
+      throw new Error("Failed to create user");
     }
 
-    return createSuccessResponse(newUser[0], 'User created successfully!', 201);
+    return createSuccessResponse(newUser[0], "User created successfully!", 201);
   } catch (error) {
     if (error instanceof ValidationError) {
       throw error;
     }
-    console.error('Error creating user:', error);
-    throw new Error('Failed to create user. Please try again.');
+    console.error("Error creating user:", error);
+    throw new Error("Failed to create user. Please try again.");
   }
 });

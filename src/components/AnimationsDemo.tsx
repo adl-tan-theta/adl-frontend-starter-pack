@@ -1,23 +1,27 @@
 "use client";
 
-import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  Heart, 
-  Star, 
-  ThumbsUp, 
-  MessageCircle, 
-  Share, 
+import { AnimatePresence, motion } from "framer-motion";
+import {
   Bookmark,
-  ChevronDown,
-  ChevronUp,
-  Plus,
+  Heart,
+  MessageCircle,
   Minus,
+  Plus,
   RotateCcw,
-  Zap
+  Share,
+  Star,
+  ThumbsUp,
+  Zap,
 } from "lucide-react";
+import { useState } from "react";
+import { Button } from "@/components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function AnimationsDemo() {
   const [isVisible, setIsVisible] = useState(true);
@@ -32,19 +36,21 @@ export default function AnimationsDemo() {
     const newItem = {
       id: Date.now(),
       text: `Item ${items.length + 1}`,
-      color: `bg-${['red', 'yellow', 'pink', 'indigo', 'teal'][Math.floor(Math.random() * 5)]}-500`
+      color: `bg-${["red", "yellow", "pink", "indigo", "teal"][Math.floor(Math.random() * 5)]}-500`,
     };
     setItems([...items, newItem]);
   };
 
   const removeItem = (id: number) => {
-    setItems(items.filter(item => item.id !== id));
+    setItems(items.filter((item) => item.id !== id));
   };
 
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
       <div>
-        <h2 className="text-3xl font-bold mb-2">Framer Motion Animations Demo</h2>
+        <h2 className="text-3xl font-bold mb-2">
+          Framer Motion Animations Demo
+        </h2>
         <p className="text-muted-foreground">
           Showcasing complex animations, transitions, and interactive elements
         </p>
@@ -154,11 +160,7 @@ export default function AnimationsDemo() {
               >
                 <Plus className="h-4 w-4" />
               </Button>
-              <Button
-                onClick={() => setCount(0)}
-                variant="outline"
-                size="sm"
-              >
+              <Button onClick={() => setCount(0)} variant="outline" size="sm">
                 <RotateCcw className="h-4 w-4 mr-2" />
                 Reset
               </Button>
@@ -232,11 +234,11 @@ export default function AnimationsDemo() {
                     key={i}
                     initial={{ opacity: 0, x: -50 }}
                     animate={{ opacity: 1, x: 0 }}
-                    transition={{ 
-                      duration: 0.5, 
+                    transition={{
+                      duration: 0.5,
                       delay: i * 0.1,
                       type: "spring",
-                      stiffness: 100
+                      stiffness: 100,
                     }}
                     className="p-2 bg-primary/10 rounded text-sm"
                   >
@@ -250,9 +252,7 @@ export default function AnimationsDemo() {
           <Card>
             <CardHeader>
               <CardTitle>Spring Animation</CardTitle>
-              <CardDescription>
-                Physics-based spring animations
-              </CardDescription>
+              <CardDescription>Physics-based spring animations</CardDescription>
             </CardHeader>
             <CardContent>
               <motion.div
@@ -263,7 +263,7 @@ export default function AnimationsDemo() {
                 transition={{
                   duration: 2,
                   repeat: Infinity,
-                  ease: "easeInOut"
+                  ease: "easeInOut",
                 }}
                 className="w-16 h-16 bg-linear-to-r from-blue-500 to-purple-500 rounded-full flex items-center justify-center mx-auto"
               >

@@ -1,8 +1,13 @@
 "use client";
 
-import React from "react";
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ThemeToggle } from "./ThemeToggle";
 
 export default function ShadcnUIDemo() {
@@ -11,7 +16,9 @@ export default function ShadcnUIDemo() {
       <div>
         <div className="flex justify-between items-center mb-4">
           <div>
-            <h2 className="text-3xl font-bold mb-2">Shadcn/ui Components Demo</h2>
+            <h2 className="text-3xl font-bold mb-2">
+              Shadcn/ui Components Demo
+            </h2>
             <p className="text-muted-foreground">
               Showcasing Shadcn/ui components with Tailwind CSS v4 and React 19
             </p>
@@ -54,9 +61,7 @@ export default function ShadcnUIDemo() {
           <Card>
             <CardHeader>
               <CardTitle>Interactive Card</CardTitle>
-              <CardDescription>
-                Card with interactive elements
-              </CardDescription>
+              <CardDescription>Card with interactive elements</CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <p className="text-sm text-muted-foreground">

@@ -1,23 +1,29 @@
 "use client";
 
-import React, { Suspense, useState } from "react";
+import {
+  Clock,
+  Code,
+  Download,
+  ExternalLink,
+  Layers,
+  Loader2,
+  Shield,
+  Zap,
+} from "lucide-react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
+import { Suspense, useState } from "react";
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { 
-  Loader2, 
-  Download, 
-  ExternalLink, 
-  Code, 
-  Zap,
-  Clock,
-  Shield,
-  Layers
-} from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 // Dynamic import with loading component
-const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
+const HeavyComponent = dynamic(() => import("./HeavyComponent"), {
   loading: () => (
     <div className="flex items-center justify-center p-8">
       <Loader2 className="h-8 w-8 animate-spin" />
@@ -28,7 +34,7 @@ const HeavyComponent = dynamic(() => import('./HeavyComponent'), {
 });
 
 // Lazy loaded component
-const LazyChart = dynamic(() => import('./LazyChart'), {
+const LazyChart = dynamic(() => import("./LazyChart"), {
   loading: () => (
     <div className="h-64 bg-secondary rounded-lg flex items-center justify-center">
       <Loader2 className="h-6 w-6 animate-spin" />
@@ -37,19 +43,28 @@ const LazyChart = dynamic(() => import('./LazyChart'), {
 });
 
 // Simulated async data fetching
-async function fetchUserData(): Promise<{ name: string; email: string; avatar: string }> {
+async function fetchUserData(): Promise<{
+  name: string;
+  email: string;
+  avatar: string;
+}> {
   // Simulate API delay
-  await new Promise(resolve => setTimeout(resolve, 1000));
+  await new Promise((resolve) => setTimeout(resolve, 1000));
   return {
     name: "John Doe",
     email: "john@example.com",
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face"
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
   };
 }
 
 // Component that uses Suspense for data fetching
 function UserProfile() {
-  const [userData, setUserData] = useState<{ name: string; email: string; avatar: string } | null>(null);
+  const [userData, setUserData] = useState<{
+    name: string;
+    email: string;
+    avatar: string;
+  } | null>(null);
   const [loading, setLoading] = useState(false);
 
   const loadUserData = async () => {
@@ -58,7 +73,7 @@ function UserProfile() {
       const data = await fetchUserData();
       setUserData(data);
     } catch (error) {
-      console.error('Error fetching user data:', error);
+      console.error("Error fetching user data:", error);
     } finally {
       setLoading(false);
     }
@@ -116,7 +131,9 @@ export default function NextJSFeaturesDemo() {
   return (
     <div className="max-w-4xl mx-auto p-6 space-y-8">
       <div>
-        <h2 className="text-3xl font-bold mb-2">Next.js Advanced Features Demo</h2>
+        <h2 className="text-3xl font-bold mb-2">
+          Next.js Advanced Features Demo
+        </h2>
         <p className="text-muted-foreground">
           Showcasing dynamic imports, Suspense, image optimization, and more
         </p>
@@ -134,19 +151,21 @@ export default function NextJSFeaturesDemo() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button 
+              <Button
                 onClick={() => setShowHeavyComponent(!showHeavyComponent)}
                 className="mb-4"
               >
                 {showHeavyComponent ? "Hide" : "Load"} Heavy Component
               </Button>
               {showHeavyComponent && (
-                <Suspense fallback={
-                  <div className="flex items-center justify-center p-8">
-                    <Loader2 className="h-8 w-8 animate-spin" />
-                    <span className="ml-2">Loading...</span>
-                  </div>
-                }>
+                <Suspense
+                  fallback={
+                    <div className="flex items-center justify-center p-8">
+                      <Loader2 className="h-8 w-8 animate-spin" />
+                      <span className="ml-2">Loading...</span>
+                    </div>
+                  }
+                >
                   <HeavyComponent />
                 </Suspense>
               )}
@@ -161,10 +180,7 @@ export default function NextJSFeaturesDemo() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button 
-                onClick={() => setShowChart(!showChart)}
-                className="mb-4"
-              >
+              <Button onClick={() => setShowChart(!showChart)} className="mb-4">
                 {showChart ? "Hide" : "Show"} Chart
               </Button>
               {showChart && <LazyChart />}
@@ -200,7 +216,9 @@ export default function NextJSFeaturesDemo() {
                   className="rounded-lg"
                   priority
                 />
-                <p className="text-sm text-muted-foreground">Priority loading</p>
+                <p className="text-sm text-muted-foreground">
+                  Priority loading
+                </p>
               </div>
               <div className="space-y-2">
                 <Image

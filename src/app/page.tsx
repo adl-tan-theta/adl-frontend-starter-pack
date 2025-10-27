@@ -1,15 +1,15 @@
 import Image from "next/image";
+import AnimationsDemo from "@/components/AnimationsDemo";
+import BackendDemo from "@/components/BackendDemo";
+import ErrorHandlingDemo from "@/components/ErrorHandlingDemo";
+import NextJSFeaturesDemo from "@/components/NextJSFeaturesDemo";
 import React19Demo from "@/components/React19Demo";
 import ShadcnUIDemo from "@/components/ShadcnUIDemo";
-import BackendDemo from "@/components/BackendDemo";
-import AnimationsDemo from "@/components/AnimationsDemo";
-import NextJSFeaturesDemo from "@/components/NextJSFeaturesDemo";
-import ErrorHandlingDemo from "@/components/ErrorHandlingDemo";
 import { ThemeToggle, ThemeToggleWithDropdown } from "@/components/ThemeToggle";
 
 // Next.js 15: Explicit caching configuration
 // Force static generation for the home page
-export const dynamic = 'force-static';
+export const dynamic = "force-static";
 export const revalidate = false; // Never revalidate - fully static
 
 export default function Home() {
@@ -39,29 +39,29 @@ export default function Home() {
             <ThemeToggleWithDropdown />
           </div>
         </div>
-        
+
         <React19Demo />
-        
+
         <div className="mt-12">
           <ShadcnUIDemo />
         </div>
-        
+
         <div className="mt-12">
           <BackendDemo />
         </div>
-        
+
         <div className="mt-12">
           <AnimationsDemo />
         </div>
-        
-            <div className="mt-12">
-              <NextJSFeaturesDemo />
-            </div>
 
-            <div className="mt-12">
-              <ErrorHandlingDemo />
-            </div>
-          </main>
+        <div className="mt-12">
+          <NextJSFeaturesDemo />
         </div>
-      );
-    }
+
+        <div className="mt-12">
+          <ErrorHandlingDemo />
+        </div>
+      </main>
+    </div>
+  );
+}

@@ -1,4 +1,4 @@
-import React from "react";
+import type React from "react";
 import { cn } from "@/lib/utils";
 
 // React 19: Example component using data-slot for styling internal parts
@@ -8,21 +8,18 @@ interface AccordionItemProps extends React.HTMLAttributes<HTMLDivElement> {
   ref?: React.Ref<HTMLDivElement>;
 }
 
-function AccordionItem({ 
-  className, 
-  children, 
+function AccordionItem({
+  className,
+  children,
   value,
   ref, // ref as regular prop in React 19
-  ...props 
+  ...props
 }: AccordionItemProps) {
   return (
     <div
       ref={ref}
       data-slot="accordion-item" // data-slot for specific CSS targeting
-      className={cn(
-        "border-b border-border last:border-b-0",
-        className
-      )}
+      className={cn("border-b border-border last:border-b-0", className)}
       {...props}
     >
       {children}
@@ -30,16 +27,17 @@ function AccordionItem({
   );
 }
 
-interface AccordionTriggerProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface AccordionTriggerProps
+  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   ref?: React.Ref<HTMLButtonElement>;
 }
 
-function AccordionTrigger({ 
-  className, 
-  children, 
+function AccordionTrigger({
+  className,
+  children,
   ref, // ref as regular prop
-  ...props 
+  ...props
 }: AccordionTriggerProps) {
   return (
     <button
@@ -47,7 +45,7 @@ function AccordionTrigger({
       data-slot="accordion-trigger" // data-slot for styling
       className={cn(
         "flex flex-1 items-center justify-between py-4 font-medium transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
-        className
+        className,
       )}
       {...props}
     >
@@ -61,11 +59,11 @@ interface AccordionContentProps extends React.HTMLAttributes<HTMLDivElement> {
   ref?: React.Ref<HTMLDivElement>;
 }
 
-function AccordionContent({ 
-  className, 
-  children, 
+function AccordionContent({
+  className,
+  children,
   ref, // ref as regular prop
-  ...props 
+  ...props
 }: AccordionContentProps) {
   return (
     <div
@@ -73,13 +71,11 @@ function AccordionContent({
       data-slot="accordion-content" // data-slot for styling
       className={cn(
         "overflow-hidden text-sm transition-all data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down",
-        className
+        className,
       )}
       {...props}
     >
-      <div className="pb-4 pt-0">
-        {children}
-      </div>
+      <div className="pb-4 pt-0">{children}</div>
     </div>
   );
 }

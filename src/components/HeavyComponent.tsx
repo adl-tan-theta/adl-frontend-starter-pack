@@ -1,18 +1,24 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/Button";
-import { 
-  Cpu, 
-  Database, 
-  Network, 
-  HardDrive,
+import {
   Activity,
+  Cpu,
+  Database,
+  HardDrive,
+  Network,
   TrendingUp,
-  Zap
+  Zap,
 } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Button } from "@/components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function HeavyComponent() {
   const [data, setData] = useState<number[]>([]);
@@ -21,7 +27,9 @@ export default function HeavyComponent() {
   useEffect(() => {
     // Simulate heavy computation
     const timer = setTimeout(() => {
-      const randomData = Array.from({ length: 20 }, () => Math.floor(Math.random() * 100));
+      const randomData = Array.from({ length: 20 }, () =>
+        Math.floor(Math.random() * 100),
+      );
       setData(randomData);
       setLoading(false);
     }, 2000);
@@ -58,7 +66,8 @@ export default function HeavyComponent() {
       <CardHeader>
         <CardTitle>Heavy Component Loaded</CardTitle>
         <CardDescription>
-          This component was dynamically imported and contains heavy computations
+          This component was dynamically imported and contains heavy
+          computations
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -76,7 +85,7 @@ export default function HeavyComponent() {
                 <p className="text-xs text-muted-foreground">Connected</p>
               </div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -89,7 +98,7 @@ export default function HeavyComponent() {
                 <p className="text-xs text-muted-foreground">Active</p>
               </div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -102,7 +111,7 @@ export default function HeavyComponent() {
                 <p className="text-xs text-muted-foreground">85% Used</p>
               </div>
             </motion.div>
-            
+
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -125,13 +134,13 @@ export default function HeavyComponent() {
             <div className="grid grid-cols-5 gap-2">
               {data.map((value, index) => (
                 <motion.div
-                  key={index}
+                  key={`data-${index}-${value}`}
                   initial={{ opacity: 0, scale: 0 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.5 + index * 0.05 }}
                   className="h-16 bg-gradient-to-t from-primary/20 to-primary/5 rounded-lg flex items-end justify-center p-2"
                 >
-                  <div 
+                  <div
                     className="w-full bg-primary rounded-sm"
                     style={{ height: `${value}%` }}
                   />

@@ -1,9 +1,14 @@
 "use client";
 
-import React from "react";
 import { motion } from "framer-motion";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { TrendingUp, BarChart3, PieChart } from "lucide-react";
+import { BarChart3, PieChart } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function LazyChart() {
   const chartData = [
@@ -23,9 +28,7 @@ export default function LazyChart() {
     <Card>
       <CardHeader>
         <CardTitle>Analytics Dashboard</CardTitle>
-        <CardDescription>
-          Dynamically loaded chart components
-        </CardDescription>
+        <CardDescription>Dynamically loaded chart components</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-6">
@@ -41,19 +44,17 @@ export default function LazyChart() {
                   key={item.label}
                   initial={{ height: 0 }}
                   animate={{ height: `${item.value}%` }}
-                  transition={{ 
-                    duration: 0.8, 
+                  transition={{
+                    duration: 0.8,
                     delay: index * 0.1,
-                    ease: "easeOut"
+                    ease: "easeOut",
                   }}
                   className={`${item.color} rounded-t-sm flex-1 flex flex-col items-center justify-end p-1`}
                 >
                   <span className="text-white text-xs font-medium mb-1">
                     {item.value}%
                   </span>
-                  <span className="text-white text-xs">
-                    {item.label}
-                  </span>
+                  <span className="text-white text-xs">{item.label}</span>
                 </motion.div>
               ))}
             </div>
@@ -78,40 +79,53 @@ export default function LazyChart() {
                     >
                       <div className={`w-3 h-3 rounded-full ${item.color}`} />
                       <span className="text-sm">{item.label}</span>
-                      <span className="text-sm font-medium ml-auto">{item.value}%</span>
+                      <span className="text-sm font-medium ml-auto">
+                        {item.value}%
+                      </span>
                     </motion.div>
                   ))}
                 </div>
               </div>
               <div className="flex-1">
                 <div className="relative w-24 h-24 mx-auto">
-                  <svg className="w-24 h-24 transform -rotate-90" viewBox="0 0 100 100">
+                  <svg
+                    className="w-24 h-24 transform -rotate-90"
+                    viewBox="0 0 100 100"
+                    role="img"
+                    aria-label="Performance chart"
+                  >
                     {pieData.map((item, index) => {
-                      const startAngle = pieData.slice(0, index).reduce((acc, curr) => acc + curr.value * 3.6, 0);
+                      const startAngle = pieData
+                        .slice(0, index)
+                        .reduce((acc, curr) => acc + curr.value * 3.6, 0);
                       const endAngle = startAngle + item.value * 3.6;
                       const largeArcFlag = item.value > 50 ? 1 : 0;
-                      
-                      const x1 = 50 + 40 * Math.cos((startAngle * Math.PI) / 180);
-                      const y1 = 50 + 40 * Math.sin((startAngle * Math.PI) / 180);
+
+                      const x1 =
+                        50 + 40 * Math.cos((startAngle * Math.PI) / 180);
+                      const y1 =
+                        50 + 40 * Math.sin((startAngle * Math.PI) / 180);
                       const x2 = 50 + 40 * Math.cos((endAngle * Math.PI) / 180);
                       const y2 = 50 + 40 * Math.sin((endAngle * Math.PI) / 180);
-                      
+
                       const pathData = [
-                        `M 50 50 L ${x1} ${y1} A 40 40 0 ${largeArcFlag} 1 ${x2} ${y2} Z`
-                      ].join(' ');
+                        `M 50 50 L ${x1} ${y1} A 40 40 0 ${largeArcFlag} 1 ${x2} ${y2} Z`,
+                      ].join(" ");
 
                       return (
                         <motion.path
                           key={item.label}
                           initial={{ pathLength: 0 }}
                           animate={{ pathLength: 1 }}
-                          transition={{ 
-                            duration: 1, 
+                          transition={{
+                            duration: 1,
                             delay: 0.8 + index * 0.2,
-                            ease: "easeInOut"
+                            ease: "easeInOut",
                           }}
                           d={pathData}
-                          fill={item.color.replace('bg-', '').replace('-500', '')}
+                          fill={item.color
+                            .replace("bg-", "")
+                            .replace("-500", "")}
                           className="opacity-80"
                         />
                       );

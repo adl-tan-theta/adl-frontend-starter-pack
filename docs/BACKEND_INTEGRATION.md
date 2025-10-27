@@ -4,7 +4,7 @@
 
 ### 1. Database Setup and Configuration
 - **PostgreSQL**: Configured for Docker at port 5432
-- **Database Name**: `openkb` for hosting tables
+- **Database Name**: `frontend` for hosting tables
 - **Connection**: Environment-based configuration
 - **Drizzle ORM**: Type-safe database operations
 
@@ -330,7 +330,7 @@ src/
 
 ### 1. Environment Variables (.env.local)
 ```bash
-DATABASE_URL="postgresql://postgres:password@localhost:5432/openkb"
+DATABASE_URL="postgresql://postgres:password@localhost:5432/frontend"
 NEXTAUTH_SECRET="your-secret-key-here"
 NEXTAUTH_URL="http://localhost:3000"
 NODE_ENV="development"

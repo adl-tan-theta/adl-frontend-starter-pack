@@ -1,9 +1,15 @@
-'use client';
+"use client";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/Button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { FileQuestion, Home, ArrowLeft } from 'lucide-react';
+import { ArrowLeft, FileQuestion, Home } from "lucide-react";
+import Link from "next/link";
+import { Button } from "@/components/ui/Button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function NotFound() {
   return (
@@ -27,7 +33,7 @@ export default function NotFound() {
               <li>• You followed an outdated link</li>
             </ul>
           </div>
-          
+
           <div className="flex flex-col gap-2">
             <Button asChild className="w-full">
               <Link href="/">
@@ -35,7 +41,11 @@ export default function NotFound() {
                 Go home
               </Link>
             </Button>
-            <Button variant="outline" onClick={() => window.history.back()} className="w-full">
+            <Button
+              variant="outline"
+              onClick={() => window.history.back()}
+              className="w-full"
+            >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Go back
             </Button>

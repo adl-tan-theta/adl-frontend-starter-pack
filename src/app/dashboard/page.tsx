@@ -1,11 +1,17 @@
 "use client";
 
-import { useSession, signOut } from "next-auth/react";
+import { Key, LogOut, Shield, User } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { signOut, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/Button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { User, LogOut, Shield, Key } from "lucide-react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default function Dashboard() {
   const { data: session, status } = useSession();
@@ -42,7 +48,9 @@ export default function Dashboard() {
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold">Dashboard</h1>
-            <p className="text-muted-foreground">Welcome back, {session.user?.name}!</p>
+            <p className="text-muted-foreground">
+              Welcome back, {(session.user as any)?.name}!
+            </p>
           </div>
           <Button onClick={handleSignOut} variant="outline">
             <LogOut className="h-4 w-4 mr-2" />
@@ -57,22 +65,26 @@ export default function Dashboard() {
                 <User className="h-5 w-5" />
                 User Profile
               </CardTitle>
-              <CardDescription>
-                Your account information
-              </CardDescription>
+              <CardDescription>Your account information</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <div>
                 <p className="text-sm font-medium">Name</p>
-                <p className="text-sm text-muted-foreground">{session.user?.name}</p>
+                <p className="text-sm text-muted-foreground">
+                  {(session.user as any)?.name}
+                </p>
               </div>
               <div>
                 <p className="text-sm font-medium">Email</p>
-                <p className="text-sm text-muted-foreground">{session.user?.email}</p>
+                <p className="text-sm text-muted-foreground">
+                  {(session.user as any)?.email}
+                </p>
               </div>
               <div>
                 <p className="text-sm font-medium">User ID</p>
-                <p className="text-sm text-muted-foreground font-mono">{session.user?.id}</p>
+                <p className="text-sm text-muted-foreground font-mono">
+                  {(session.user as any)?.id}
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -83,9 +95,7 @@ export default function Dashboard() {
                 <Shield className="h-5 w-5" />
                 Session Info
               </CardTitle>
-              <CardDescription>
-                Authentication details
-              </CardDescription>
+              <CardDescription>Authentication details</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <div>
@@ -111,9 +121,7 @@ export default function Dashboard() {
                 <Key className="h-5 w-5" />
                 Security
               </CardTitle>
-              <CardDescription>
-                Account security settings
-              </CardDescription>
+              <CardDescription>Account security settings</CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <Button variant="outline" className="w-full">
@@ -153,7 +161,8 @@ export default function Dashboard() {
               <div className="space-y-2">
                 <h4 className="font-semibold">✅ Route Protection</h4>
                 <p className="text-sm text-muted-foreground">
-                  Protected routes with automatic redirects for unauthenticated users
+                  Protected routes with automatic redirects for unauthenticated
+                  users
                 </p>
               </div>
               <div className="space-y-2">
